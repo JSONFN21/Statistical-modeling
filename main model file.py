@@ -253,9 +253,7 @@ def model_4_mu_model(data_comp, data_length, non_counts, non_summary, typeofmut,
         return nb_summary.tolist()
 
 
-######################################
-# Refactored Plotting Functions
-######################################
+
 def plot_syn_ax(ax, syn_sum, poison_vals_syn1, poison_vals_syn2, title):
     custom_scale = [0.1, 1, 10, 100, 1000, 10000]
     sns.barplot(x='Syn_Categories', y='Count', data=syn_sum,
@@ -294,9 +292,7 @@ def plot_non_ax(ax, non_sum, poisson_1, poison_vals_non3, poison_vals_non4, titl
     ax.set_title(title, color='#3D3934')
 
 
-######################################
-# Separate Plotting Functions (No Grouping)
-######################################
+
 def separate_syn_plots(data, data_length):
     # Subset synonymous data by treatment.
     plus_syn = data[(data['cip'] == 'Plus') & (data['snp_type'] == 'synonymous')]
@@ -328,7 +324,7 @@ def separate_syn_plots(data, data_length):
 
 
 def separate_non_plots(data, data_length):
-    # Group non-synonymous data by treatment and concentration.
+    # group non-synonymous data by treatment and concentration.
     plus = data[(data['cip'] == 'Plus') & (data['snp_type'] != 'synonymous')]
     minus = data[(data['cip'] == 'Minus') & (data['snp_type'] != 'synonymous')]
     plus_pops_non = {}
@@ -367,9 +363,7 @@ def separate_non_plots(data, data_length):
         plt.show()
 
 
-######################################
-# Helper Function for Synonymous Data
-######################################
+
 def deal_with_Syn(data, data_length):
     # Organize synonymous data by treatment.
     plus_syn = data[(data['cip'] == 'Plus') & (data['snp_type'] == 'synonymous')]
@@ -381,20 +375,15 @@ def deal_with_Syn(data, data_length):
     return syn_counts_plus, syn_counts_minus
 
 
-######################################
-# Main Routine
-######################################
+
 def main():
-    # Read in your CSV files (adjust paths/names as needed)
     data = pd.read_csv('all_evol_mut_uni - all_evol_mut_uni (1).csv')
     data_length = pd.read_csv('gene_list_file.csv')
     data_length = data_length[['gene_id', 'gene_length']]
     data_length = data_length.rename(columns={'gene_id': 'geneID'})
 
-    # Plot synonymous mutation models (separately for Plus and Minus)
     separate_syn_plots(data, data_length)
 
-    # Plot non-synonymous mutation models (each concentration and treatment in its own figure)
     separate_non_plots(data, data_length)
 
 
